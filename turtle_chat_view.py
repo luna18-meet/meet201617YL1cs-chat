@@ -5,8 +5,12 @@
 #                                   IMPORTS                                         #
 #####################################################################################
 #import the turtle module
+import turtle
+from turtle_chat_client import Client
+from turtle_chat_widgets import Button, TextInput
 #import the Client class from the turtle_chat_client module
 #Finally, from the turtle_chat_widgets module, import two classes: Button and TextInput
+
 #####################################################################################
 #####################################################################################
 
@@ -35,6 +39,31 @@
 #
 #3. If you want to make a newline character (i.e. go to the next line), just add
 #   \r to your string.  Test it out at the Python shell for practice
+class TextBox(TextInput):
+    def draw_box():
+        turtle.penup()
+        turtle.goto(0,0)
+        turtle.pendown()
+        turtle.goto(0,100)
+        turtle.goto(100,100)
+        turtle.goto(100,0)
+        turtle.goto(0,0)
+    def write_msg(self):
+        self.writer=turtle.clone()
+        self.writer.hideturtle()
+        self.writer.penup()
+        self.writer.goto(-self.width/2+10+self.pos[0],self.pos[1]-self.height/2+20)
+        self.writer.pendown()
+        
+
+
+        
+        
+        
+        
+        
+        
+        
 #####################################################################################
 #####################################################################################
 
@@ -82,7 +111,7 @@ class View:
         ###
 
         ###
-        #Make a new client object and store it in this instance of View
+        #Make a new Client object and store it in this instance of View
         #(i.e. self).  The name of the instance should be my_client
         ###
 

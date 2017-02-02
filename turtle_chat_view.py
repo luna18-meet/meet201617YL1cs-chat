@@ -40,20 +40,28 @@ from turtle_chat_widgets import Button, TextInput
 #3. If you want to make a newline character (i.e. go to the next line), just add
 #   \r to your string.  Test it out at the Python shell for practice
 class TextBox(TextInput):
-    def draw_box():
-        turtle.penup()
-        turtle.goto(0,0)
-        turtle.pendown()
-        turtle.goto(0,100)
-        turtle.goto(100,100)
-        turtle.goto(100,0)
-        turtle.goto(0,0)
+    def draw_box(self):
+        self.turtle=turtle.clone()
+        self.turtle.goto(self.pos)
+        self.turtle.pendown()
+        print(self.width)
+        print(self.height)
+        print(-self.height)
+        print(self.width)
+        self.turtle.penup()
     def write_msg(self):
-        self.writer=turtle.clone()
+        '''self.writer=turtle.clone()
         self.writer.hideturtle()
         self.writer.penup()
-        self.writer.goto(-self.width/2+10+self.pos[0],self.pos[1]-self.height/2+20)
-        self.writer.pendown()
+        self.writer.goto(-80,0)
+        self.writer.showturtle()
+        self.writer.pendown()'''
+        self.writer.clear()
+        self.writer.write(self.new_msg)
+
+        
+        
+        
         
 
 
@@ -70,6 +78,7 @@ class TextBox(TextInput):
 #####################################################################################
 #                                  SendButton                                       #
 #####################################################################################
+        
 #Make a class called SendButton, which will be a subclass of Button.
 #Button is an abstract class with one abstract method: fun.
 #fun gets called whenever the button is clicked.  It's jobs will be to

@@ -50,7 +50,7 @@ class TextBox(TextInput):
         turtle.goto(100,-100)
         turtle.goto(-100,-100)
     def write_msg(self):
-        self.draw_box()
+        
         '''self.writer=turtle.clone()
         self.writer.hideturtle()
         self.writer.penup()
@@ -93,6 +93,34 @@ class TextBox(TextInput):
 #      input: view.  This will be an instance of the View class you will make next
 #      That class will have methods inside of it to help
 #      you send messages and update message displays.
+class SendButton(Button):
+    def __init__(self,view,my_turtle=None,shape=None,pos=(0,0)):
+        if my_turtle is None :
+            self.turtle=turtle.clone()
+        else:
+            self.turtle=my_turtle
+
+        self.turtle.speed(0)
+        self.turtle.hideturtle()
+        self.turtle.penup()
+        self.turtle.goto(pos)
+
+        if shape is None:
+            self.turtle.shape('square')
+            self.turtle.shapesize(2,10)
+        else:
+            turtle.addshape(shape)
+            self.turtle.shape(shape)
+        self.turtle.showturtle()
+        self.turtle.onclick(self.fun) 
+        turtle.listen()
+        self.view=view
+    def fun(self,x=0,y=0):
+        self.view.send_msg()
+    
+        
+        
+        
 #####################################################################################
 #####################################################################################
 
@@ -107,7 +135,7 @@ class TextBox(TextInput):
 ##################################################################
 ##################################################################
 class View:
-    _MSG_LOG_LENGTH=5 #Number of messages to retain in view
+    _MSG_LOG_LENGTH=5
     _SCREEN_WIDTH=300
     _SCREEN_HEIGHT=600
     _LINE_SPACING=round(_SCREEN_HEIGHT/2/(_MSG_LOG_LENGTH+1))
@@ -120,6 +148,9 @@ class View:
         ###
         #Store the username and partner_name into the instance.
         ###
+        self.username=username
+        self.partner_name=partner_name
+        
 
         ###
         #Make a new Client object and store it in this instance of View
@@ -172,6 +203,7 @@ class View:
         It should call self.display_msg() to cause the message
         display to be updated.
         '''
+        
         pass
 
     def get_msg(self):

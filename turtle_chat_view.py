@@ -135,12 +135,14 @@ class SendButton(Button):
 ##################################################################
 ##################################################################
 class View:
-    _MSG_LOG_LENGTH=5
-    _SCREEN_WIDTH=300
-    _SCREEN_HEIGHT=600
-    _LINE_SPACING=round(_SCREEN_HEIGHT/2/(_MSG_LOG_LENGTH+1))
+
 
     def __init__(self,username='Me',partner_name='Partner'):
+
+        _MSG_LOG_LENGTH=5
+        _SCREEN_WIDTH=300
+        _SCREEN_HEIGHT=600
+        _LINE_SPACING=round(_SCREEN_HEIGHT/2/(_MSG_LOG_LENGTH+1))
         '''
         :param username: the name of this chat user
         :param partner_name: the name of the user you are chatting with
@@ -156,6 +158,13 @@ class View:
         #Make a new Client object and store it in this instance of View
         #(i.e. self).  The name of the instance should be my_client
         ###
+        
+
+        my_client=Client()
+        self.my_client=my_client
+        
+        
+        
 
         ###
         #Set screen dimensions using turtle.setup
@@ -167,6 +176,9 @@ class View:
         #
         #at the Python shell.
         ###
+        turtle.setup(width=400, height=600, startx=None, starty=None)
+        
+        
 
         ###
         #This list will store all of the messages.
@@ -182,12 +194,21 @@ class View:
         #You can use the clear() and write() methods to erase
         #and write messages for each
         ###
+        
+        turtle.clear()
+        turtle.write(new_msg)
+        turtle=new_msg()
+        
 
         ###
         #Create a TextBox instance and a SendButton instance and
         #Store them inside of this instance
         ###
-
+        Text_Box=TextBox()
+        Send_Button=SendButton()
+        self.Text_Box=Text_Box
+        self.Send_Button=Send_Button
+         
         ###
         #Call your setup_listeners() function, if you have one,
         #and any other remaining setup functions you have invented.
@@ -204,7 +225,11 @@ class View:
         display to be updated.
         '''
         
-        pass
+        self.my_client.send(self.Text_Box.new_msg)
+        self.msg_queue.append(self.Text_Box.new_msg)
+        self.Text_Box.clear_msg()
+        self.display_msg()
+        
 
     def get_msg(self):
         return self.textbox.get_msg()
@@ -246,6 +271,7 @@ class View:
         You can get the messages you want from self.msg_queue
         '''
         pass
+        
 
     def get_client(self):
         return self.my_client

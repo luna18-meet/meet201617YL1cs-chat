@@ -42,13 +42,18 @@ from turtle_chat_widgets import Button, TextInput
 class TextBox(TextInput):
     def draw_box(self):
         turtle.speed(0)
-        turtle.pos()
+        turtle.hideturtle()
+        turtle.pendown()
+        turtle.goto(self.pos)
+        pos = turtle.position()
+        turtle.goto(pos[0] + self.width/2,pos[1])
+        turtle.goto(pos[0] + self.width/2,pos[1] + self.height)
+        turtle.goto(pos[0] - self.width/2,pos[1] + self.height)
+        turtle.goto(pos[0] - self.width/2,pos[1])
+        turtle.goto(self.pos)
         
         turtle.pendown()
-        turtle.goto(-100,0)
-        turtle.goto(100,0)
-        turtle.goto(100,-100)
-        turtle.goto(-100,-100)
+        
     def write_msg(self):
         
         '''self.writer=turtle.clone()
@@ -94,7 +99,7 @@ class TextBox(TextInput):
 #      That class will have methods inside of it to help
 #      you send messages and update message displays.
 class SendButton(Button):
-    def __init__(self,view,my_turtle=None,shape=None,pos=(0,0)):
+    def __init__(self,view=None,my_turtle=None,shape=None,pos=(0,0)):
         if my_turtle is None :
             self.turtle=turtle.clone()
         else:
@@ -115,7 +120,7 @@ class SendButton(Button):
         self.turtle.onclick(self.fun) 
         turtle.listen()
         self.view=view
-    def fun(self,x=0,y=0):
+    def fun(self,view,x=0,y=0):
         self.view.send_msg()
     
         
@@ -137,7 +142,7 @@ class SendButton(Button):
 class View:
 
 
-    def __init__(self,username='Me',partner_name='Partner'):
+    def __init__(self,username='Me',partner_name='Partner',):
 
         _MSG_LOG_LENGTH=5
         _SCREEN_WIDTH=300
@@ -176,7 +181,7 @@ class View:
         #
         #at the Python shell.
         ###
-        turtle.setup(width=400, height=600, startx=None, starty=None)
+        #turtle.setup(width=400, height=600, startx=None, starty=None)
         
         
 
@@ -194,10 +199,8 @@ class View:
         #You can use the clear() and write() methods to erase
         #and write messages for each
         ###
-        
+        import turtle
         turtle.clear()
-        turtle.write(new_msg)
-        turtle=new_msg()
         
 
         ###
@@ -205,9 +208,10 @@ class View:
         #Store them inside of this instance
         ###
         Text_Box=TextBox()
-        Send_Button=SendButton()
+        Send_Button=SendButton(view=self)
         self.Text_Box=Text_Box
         self.Send_Button=Send_Button
+        turtle.write(Text_Box.new_msg)
          
         ###
         #Call your setup_listeners() function, if you have one,
@@ -266,11 +270,10 @@ class View:
         #Then, call the display_msg method to update the display
 
     def display_msg(self):
-        '''
-        This method should update the messages displayed in the screen.
-        You can get the messages you want from self.msg_queue
-        '''
-        pass
+        self.display_msg=display_msg()
+
+        self.display_msg.clear()
+        self.display_msg.write(self.msg_queue[0])
         
 
     def get_client(self):

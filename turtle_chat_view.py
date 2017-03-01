@@ -40,19 +40,18 @@ from turtle_chat_widgets import Button, TextInput
 #3. If you want to make a newline character (i.e. go to the next line), just add
 #   \r to your string.  Test it out at the Python shell for practice
 class TextBox(TextInput):
-    def draw_box(self):
-        turtle.speed(0)
-        turtle.hideturtle()
-        turtle.pendown()
-        turtle.goto(self.pos)
-        pos = turtle.position()
-        turtle.goto(pos[0] + self.width/2,pos[1])
-        turtle.goto(pos[0] + self.width/2,pos[1] + self.height)
-        turtle.goto(pos[0] - self.width/2,pos[1] + self.height)
-        turtle.goto(pos[0] - self.width/2,pos[1])
-        turtle.goto(self.pos)
-        
-        turtle.pendown()
+    def draw_box(self,pos=(0,-200),width=200,height=100):
+        self.box=turtle.clone()
+        self.box.speed(0)
+        self.box.hideturtle()
+        self.box.penup()
+        self.box.goto(-100,-200)
+        self.box.pendown()
+        self.box.goto(-100,-100)
+        self.box.goto(100,-100)
+        self.box.goto(100,-200)
+        self.box.goto(-100,-200)
+       
         
     def write_msg(self):
         
@@ -62,6 +61,8 @@ class TextBox(TextInput):
         self.writer.goto(-80,0)
         self.writer.showturtle()
         self.writer.pendown()'''
+        self.writer.hideturtle()
+        self.writer.goto(-90,-120)
         self.writer.clear()
         self.writer.write(self.new_msg)
         
@@ -99,7 +100,7 @@ class TextBox(TextInput):
 #      That class will have methods inside of it to help
 #      you send messages and update message displays.
 class SendButton(Button):
-    def __init__(self,view=None,my_turtle=None,shape=None,pos=(0,0)):
+    def __init__(self,view=None,my_turtle=None,shape=None,pos=(0,-210)):
         if my_turtle is None :
             self.turtle=turtle.clone()
         else:
@@ -112,7 +113,7 @@ class SendButton(Button):
 
         if shape is None:
             self.turtle.shape('square')
-            self.turtle.shapesize(2,10)
+            self.turtle.shapesize(1,5)
         else:
             turtle.addshape(shape)
             self.turtle.shape(shape)
@@ -271,7 +272,6 @@ class View:
 
     def display_msg(self):
         self.display_msg=display_msg()
-
         self.display_msg.clear()
         self.display_msg.write(self.msg_queue[0])
         

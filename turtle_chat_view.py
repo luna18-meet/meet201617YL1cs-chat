@@ -100,8 +100,8 @@ class TextBox(TextInput):
 #      That class will have methods inside of it to help
 #      you send messages and update message displays.
 class SendButton(Button):
-    def __init__(self,view=None,my_turtle=None,shape=None,pos=(0,-210)):
-        if my_turtle is None :
+    def __init__(self,view,my_turtle=None,shape=None,pos=(0,-210)):
+        if my_turtle ==None :
             self.turtle=turtle.clone()
         else:
             self.turtle=my_turtle
@@ -110,6 +110,7 @@ class SendButton(Button):
         self.turtle.hideturtle()
         self.turtle.penup()
         self.turtle.goto(pos)
+        screen=turtle.Screen()
 
         if shape is None:
             self.turtle.shape('square')
@@ -121,9 +122,9 @@ class SendButton(Button):
         self.turtle.onclick(self.fun) 
         turtle.listen()
         self.view=view
-    def fun(self,view,x=0,y=0):
+    def fun(self,x=None,y=None):
         self.view.send_msg()
-    
+        
         
         
         
@@ -141,6 +142,7 @@ class SendButton(Button):
 ##################################################################
 ##################################################################
 class View:
+    turtle.setup(width=400, height=600, startx=None, starty=None)
 
 
     def __init__(self,username='Me',partner_name='Partner',):
@@ -171,6 +173,7 @@ class View:
         
         
         
+        
 
         ###
         #Set screen dimensions using turtle.setup
@@ -182,6 +185,7 @@ class View:
         #
         #at the Python shell.
         ###
+
         #turtle.setup(width=400, height=600, startx=None, starty=None)
         
         
@@ -202,6 +206,11 @@ class View:
         ###
         import turtle
         turtle.clear()
+        self.luna_msg=turtle.clone()
+        self.luna1=turtle.clone()
+        self.luna2=turtle.clone()
+        self.luna3=turtle.clone()
+        self.luna4=turtle.clone()
         
 
         ###
@@ -269,11 +278,17 @@ class View:
         #or append (to put at the end).
         #
         #Then, call the display_msg method to update the display
+        self.msg_queue.append(new_msg)
+        
 
     def display_msg(self):
-        self.display_msg=display_msg()
-        self.display_msg.clear()
-        self.display_msg.write(self.msg_queue[0])
+        #self.display_msg=display_msg()
+        self.luna_msg.clear()
+        self.luna_msg.penup()
+        self.luna_msg.speed(0)
+        self.luna_msg.goto(-90,0)
+        self.luna_msg.write(self.msg_queue[-1])
+        self.luna_msg.hideturtle()
         
 
     def get_client(self):

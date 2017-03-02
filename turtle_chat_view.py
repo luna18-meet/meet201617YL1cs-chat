@@ -10,7 +10,8 @@ from turtle_chat_client import Client
 from turtle_chat_widgets import Button, TextInput
 #import the Client class from the turtle_chat_client module
 #Finally, from the turtle_chat_widgets module, import two classes: Button and TextInput
-
+luna=turtle.Screen()
+luna.bgpic("luna.gif")
 #####################################################################################
 #####################################################################################
 
